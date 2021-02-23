@@ -2,7 +2,7 @@
     <div class="container__currency">
       <mat-form-field appearance="fill">
         <mat-label>Enter amount from</mat-label>
-        <input matInput #input [ngModel]="amountFrom$ | async" (ngModelChange)="onAmountChange($event)" maxlength="15" placeholder="20.00">
+        <input matInput #input [ngModel]="amountFrom$ | async" type="number" (ngModelChange)="onAmountChange($event)" maxlength="15" placeholder="20.00">
         <mat-hint align="end">{{input.value?.length || 0}}/15</mat-hint>
       </mat-form-field>
     
@@ -43,16 +43,16 @@
     <p>Choose date FROM (year)</p>
     <mat-form-field appearance="fill">
       <mat-label>Enter date From</mat-label>
-      <input matInput #input [ngModel]="yearFrom" (ngModelChange)="onYearFromChange($event)" [max]="updated - 1" min="2000" maxlength="4" placeholder="2015">
-      <mat-hint align="end">{{input.value?.length || 0}}/4</mat-hint>
+      <input matInput #from [ngModel]="yearFrom" type="number" (ngModelChange)="onYearFromChange($event)" [max]="updated - 1" min="2000" maxlength="4" placeholder="2015">
+      <mat-hint align="end">{{from.value?.length || 0}}/4</mat-hint>
     </mat-form-field>
   </div>
   <div class="date-to">
     <p>Choose date TO (year)</p>
   <mat-form-field appearance="fill">
     <mat-label>Enter date TO </mat-label>
-    <input matInput #input [ngModel]="yearTo" (ngModelChange)="onYearToChange($event)" maxlength="4" [max]="updated" placeholder="2021">
-    <mat-hint align="end">{{input.value?.length || 0}}/4</mat-hint>
+    <input matInput #to [ngModel]="yearTo" type="number" (ngModelChange)="onYearToChange($event)" maxlength="4" min="2000" [max]="updated" placeholder="2021">
+    <mat-hint align="end">{{to.value?.length || 0}}/4</mat-hint>
   </mat-form-field>
   </div>
 </section>
