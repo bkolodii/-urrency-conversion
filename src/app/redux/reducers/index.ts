@@ -1,16 +1,11 @@
 // import { Currency } from './../models/currency';
 
-import { CurrencyItems } from '../../interfaces/currencyItem';
-import { History } from '../../interfaces/historyCurr';
+import { State } from 'src/app/interfaces/state.interface';
 import * as fromAmount from './amount';
 import * as fromCurrency from './amountCurr';
 import * as fromHistory from './historyCurr';
 
-export interface State {
-    amount: number;
-    currencies: number;
-    history : History
-}
+
 
 export const reducers = {
     amount: fromAmount.reducer,

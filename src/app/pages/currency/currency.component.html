@@ -1,31 +1,59 @@
-<div class="container">
+<section class="container">
+    <div class="container__currency">
+      <mat-form-field appearance="fill">
+        <mat-label>Enter amount from</mat-label>
+        <input matInput #input [ngModel]="amountFrom$ | async" (ngModelChange)="onAmountChange($event)" maxlength="15" placeholder="20.00">
+        <mat-hint align="end">{{input.value?.length || 0}}/15</mat-hint>
+      </mat-form-field>
+    
+      <mat-form-field appearance="fill">
+        <mat-label>Select me</mat-label>
+        <mat-select [(ngModel)]="selectedCurrencyFrom" name="selectedCurrencyFrom">
+          <mat-option *ngFor="let item of currencies" [value]="item.code" (click)="currencyFrom(item)">{{item.code}}
+          </mat-option>
+        </mat-select>
+        <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
+      </mat-form-field>
+    </div>
+    <button mat-raised-button (click)="ChangeCurr()" color="primary">Swap</button>
+   
+   
+    <div class="container__currency">
+      <mat-form-field appearance="fill">
+        <mat-label>Here amount to</mat-label>
+        <input matInput #input [(ngModel)]="amountTo" disabled>
+      </mat-form-field>
+    
+      <mat-form-field appearance="fill">
+        <mat-label>Select me</mat-label>
+        <mat-select [(ngModel)]="selectedCurrencyTo" name="selectedCurrencyTo">
+          <mat-option *ngFor="let item of currencies"  [value]="item.code" (click)="currencyTo(item)">{{item.code}}
+          </mat-option>
+        </mat-select>
+        <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
+      </mat-form-field>
+    </div>
+</section>
+  <h2>
+    Filter a graph by date
+  </h2>
+
+<section class="filter">
+  <div class="date-from">
+    <p>Choose date FROM (year)</p>
     <mat-form-field appearance="fill">
-      <mat-label>Enter amount from</mat-label>
-      <input matInput #input [ngModel]="amountFrom$ | async" (ngModelChange)="onAmountChange($event)" placeholder="20.00">
-    </mat-form-field>
-  
-    <mat-form-field appearance="fill">
-      <mat-label>Select me</mat-label>
-      <mat-select [(ngModel)]="selectedCurrencyFrom" name="selectedCurrencyFrom">
-        <mat-option *ngFor="let item of currencies" [value]="item.code" (click)="currencyFrom(item)">{{item.code}}
-        </mat-option>
-      </mat-select>
-      <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
-    </mat-form-field>
-    <button mat-raised-button (click)="ChangeCurr()" color="primary">Exchange</button>
-    <mat-form-field appearance="fill">
-      <mat-label>Here amount to</mat-label>
-      <input matInput #input [(ngModel)]="amountTo" disabled>
-      <!-- <input matInput #input disabled > -->
-  
-    </mat-form-field>
-  
-    <mat-form-field appearance="fill">
-      <mat-label>Select me</mat-label>
-      <mat-select [(ngModel)]="selectedCurrencyTo" name="selectedCurrencyTo">
-        <mat-option *ngFor="let item of currencies"  [value]="item.code" (click)="currencyTo(item)">{{item.code}}
-        </mat-option>
-      </mat-select>
-      <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
+      <mat-label>Enter date From</mat-label>
+      <input matInput #input [ngModel]="yearFrom" (ngModelChange)="onYearFromChange($event)" [max]="updated - 1" min="2000" maxlength="4" placeholder="2015">
+      <mat-hint align="end">{{input.value?.length || 0}}/4</mat-hint>
     </mat-form-field>
   </div>
+  <div class="date-to">
+    <p>Choose date TO (year)</p>
+  <mat-form-field appearance="fill">
+    <mat-label>Enter date TO </mat-label>
+    <input matInput #input [ngModel]="yearTo" (ngModelChange)="onYearToChange($event)" maxlength="4" [max]="updated" placeholder="2021">
+    <mat-hint align="end">{{input.value?.length || 0}}/4</mat-hint>
+  </mat-form-field>
+  </div>
+</section>
+  

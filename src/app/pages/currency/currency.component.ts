@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { CurrencyItems } from 'src/app/interfaces/currencyItem';
+import { State } from 'src/app/interfaces/state.interface';
 import { AmountChangeAction } from 'src/app/redux/actions/amount';
 import { AmountCurrChangeAction } from 'src/app/redux/actions/amountCurr';
 import { CurrencyService } from 'src/app/services/currency.service';
@@ -21,7 +22,9 @@ export class CurrencyComponent implements OnInit {
   selectedCurrencyTo: string = '';
   selectedCurrencyFrom: string = '';
   updated: number;
-  constructor(public store: Store<fromRoot.State>, public currService: CurrencyService) {
+  yearFrom: number;
+  yearTo: number;
+  constructor(public store: Store<State>, public currService: CurrencyService) {
     this.amountFrom$ = store.select(fromRoot.getAmountState);
   }
 
@@ -30,7 +33,7 @@ export class CurrencyComponent implements OnInit {
       this.currencies = Object.keys(data.rates).map(key => {
         return { code: key, value: data.rates[key] }
       })
-      this.updated = +data.date.substr(0,4);      
+      this.updated = +data.date.substr(0, 4);
     })
 
   }
@@ -41,7 +44,7 @@ export class CurrencyComponent implements OnInit {
     this.historyAll = JSON.parse(JSON.stringify(this.historyAll))
     this.historyAll[0] = JSON.parse(JSON.stringify(this.historyAll[0]))
     this.historyAll[0] = []
-    for (let i = 2015; i < +this.updated+1; i++) {
+    for (let i = (this.yearFrom ? this.yearFrom : 2015); i < (this.yearTo ? this.yearTo + 1 : +this.updated + 1); i++) {
       this.currService.getCurrHisrory(i).subscribe(data => {
         Object.keys(data.rates).map(
           key => {
@@ -54,7 +57,7 @@ export class CurrencyComponent implements OnInit {
               })
             }
           })
-        if (i == +this.updated) {
+        if (i == (this.yearTo ? this.yearTo : +this.updated)) {
           this.currService.history.next(this.historyAll);
           this.exchange();
         }
@@ -69,7 +72,7 @@ export class CurrencyComponent implements OnInit {
     this.historyAll = JSON.parse(JSON.stringify(this.historyAll))
     this.historyAll[1] = JSON.parse(JSON.stringify(this.historyAll[1]))
     this.historyAll[1] = []
-    for (let i = 2015; i < +this.updated+1; i++) {
+    for (let i = this.yearFrom ? this.yearFrom : 2015; i < (this.yearTo ? this.yearTo + 1 : +this.updated + 1); i++) {
       this.currService.getCurrHisrory(i).subscribe(data => {
         Object.keys(data.rates).map(
           key => {
@@ -82,7 +85,7 @@ export class CurrencyComponent implements OnInit {
               })
             }
           })
-        if (i == +this.updated) {
+        if (i == (this.yearTo ? this.yearTo : +this.updated)) {
           this.currService.history.next(this.historyAll);
           this.exchange();
         }
@@ -94,8 +97,8 @@ export class CurrencyComponent implements OnInit {
     this.currSelect = JSON.parse(JSON.stringify(this.currSelect))
     this.historyAll = JSON.parse(JSON.stringify(this.historyAll))
     this.currSelect = this.currSelect.reverse()
-    if(this.currSelect[0]) this.selectedCurrencyFrom = this.currSelect[0].code
-    if(this.currSelect[1]) this.selectedCurrencyTo = this.currSelect[1].code
+    if (this.currSelect[0]) this.selectedCurrencyFrom = this.currSelect[0].code
+    if (this.currSelect[1]) this.selectedCurrencyTo = this.currSelect[1].code
     this.historyAll = this.historyAll.reverse()
     this.currService.history.next(this.historyAll);
     this.exchange()
@@ -111,6 +114,29 @@ export class CurrencyComponent implements OnInit {
   onAmountChange(amount: string) {
     const number = parseFloat(amount);
     if (!isNaN(number)) this.store.dispatch(new AmountChangeAction(number));
+    this.store.subscribe(data => {
+      this.amountTo = +(data.amount * fromRoot.getCurrnecyRates(data)).toFixed(2);
+    })
+  }
+
+  onYearToChange(year: string) {
+    if (+year <= this.updated && +year > 1999) {
+    this.yearTo = +year
+      if(this.currSelect[0] && this.currSelect[1]){
+        this.currencyFrom(this.currSelect[0])
+        this.currencyTo(this.currSelect[1])
+      }
+    }
+  }
+
+  onYearFromChange(year: string) {
+    if (+year > 1999 && +year < this.updated) {      
+      this.yearFrom = +year
+      if (this.currSelect[0] && this.currSelect[1]) {
+        this.currencyFrom(this.currSelect[0])
+        this.currencyTo(this.currSelect[1])
+      }
+    }
   }
 
 }

@@ -7,7 +7,7 @@ import { CurrencyItems } from '../interfaces/currencyItem';
   providedIn: 'root'
 })
 export class CurrencyService {
-  history: Subject<Array<Array<CurrencyItems>>> = new Subject<Array<any>>()
+  history: Subject<Array<Array<CurrencyItems>>> = new Subject<Array<Array<CurrencyItems>>>()
   updateDate: Subject<number> = new Subject<number>()
   constructor(private http: HttpClient) { }
 

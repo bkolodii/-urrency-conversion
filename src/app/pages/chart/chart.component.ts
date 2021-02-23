@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewChild } from "@angular/core";
 import { Store } from '@ngrx/store';
-import * as fromRoot from "../../redux/reducers";
-
 
 import {
   ChartComponent,
@@ -16,6 +14,7 @@ import {
 } from "ng-apexcharts";
 import { HistoryCurrChangeAction } from 'src/app/redux/actions/historyCurr';
 import { CurrencyService } from 'src/app/services/currency.service';
+import { State } from 'src/app/interfaces/state.interface';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -35,7 +34,8 @@ export type ChartOptions = {
 export class ChartsComponent implements OnInit {
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
-  constructor(public currService: CurrencyService, public store: Store<fromRoot.State>) {
+  state: State;  
+  constructor(public currService: CurrencyService, public store: Store<State>) {
     this.chartOptions = {
       series: [
         {
@@ -95,11 +95,14 @@ export class ChartsComponent implements OnInit {
   }
   buildChart(): void {
     this.store.subscribe(data => {
+      this.state = JSON.parse(JSON.stringify(data))
       this.chartOptions = {
         series: [
           {
             name: "Desktops",
-            data: data.history.result
+            data: this.state.history.result.map(keys => {
+              return +keys.toFixed(2)
+            })
           }
         ],
         chart: {
@@ -126,7 +129,9 @@ export class ChartsComponent implements OnInit {
           }
         },
         xaxis: {
-          categories: data.history.date
+          categories: this.state.history.date.map(key => {
+            return key.substr(0,4)
+          })
         }
       };
     })
