@@ -1,0 +1,15 @@
+@import '../../../assets/styles/mixims';
+.container .mat-form-field+.mat-form-field {
+  margin-left: 8px;
+}
+
+.container {
+  width: 100%;
+  margin: 10px auto;
+  @include flexbox(nowrap, row, space-around, center);
+  
+}
+.mat-raised-button{
+  margin-bottom: 10px;
+  align-self: center;
+}

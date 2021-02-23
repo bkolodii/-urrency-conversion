@@ -1,0 +1,31 @@
+<div class="container">
+    <mat-form-field appearance="fill">
+      <mat-label>Enter amount from</mat-label>
+      <input matInput #input [ngModel]="amountFrom$ | async" (ngModelChange)="onAmountChange($event)" placeholder="20.00">
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Select me</mat-label>
+      <mat-select [(ngModel)]="selectedCurrencyFrom" name="selectedCurrencyFrom">
+        <mat-option *ngFor="let item of currencies" [value]="item.code" (click)="currencyFrom(item)">{{item.code}}
+        </mat-option>
+      </mat-select>
+      <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
+    </mat-form-field>
+    <button mat-raised-button (click)="ChangeCurr()" color="primary">Exchange</button>
+    <mat-form-field appearance="fill">
+      <mat-label>Here amount to</mat-label>
+      <input matInput #input [(ngModel)]="amountTo" disabled>
+      <!-- <input matInput #input disabled > -->
+  
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Select me</mat-label>
+      <mat-select [(ngModel)]="selectedCurrencyTo" name="selectedCurrencyTo">
+        <mat-option *ngFor="let item of currencies"  [value]="item.code" (click)="currencyTo(item)">{{item.code}}
+        </mat-option>
+      </mat-select>
+      <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
+    </mat-form-field>
+  </div>
