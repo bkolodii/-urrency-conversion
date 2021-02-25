@@ -10,3 +10,4 @@ export function reducer(state: number = 1, action: amount.AmountChangeAction) {
             return state;
     }
 }
+

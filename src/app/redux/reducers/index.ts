@@ -13,9 +13,6 @@ export const reducers = {
     history: fromHistory.reducer
 };
 
-function getRank(state : State) : number{
-   return state.currencies * state.amount
-}
 // Selectors
 export const getAmountState = (state: State) => state.amount;
 

@@ -1,5 +1,3 @@
-import { ActionReducer, Action } from '@ngrx/store';
-
 import * as history from '../actions/historyCurr';
 import { History } from '../../interfaces/historyCurr';
 export const startState: History = {
@@ -26,7 +24,7 @@ export function reducer(state: History = startState, action: history.HistoryCurr
                     date: date
                 };
             } else {
-                return state
+                return state;
             }
         default:
             return state;

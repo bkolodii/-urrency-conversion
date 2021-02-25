@@ -29,13 +29,15 @@ export class CurrencyComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getCurrency()
+  }
+  getCurrency() {
     this.currService.getCurrency().subscribe(data => {
       this.currencies = Object.keys(data.rates).map(key => {
         return { code: key, value: data.rates[key] }
       })
       this.updated = +data.date.substr(0, 4);
     })
-
   }
 
   currencyFrom(curr: CurrencyItems) {
@@ -120,7 +122,7 @@ export class CurrencyComponent implements OnInit {
   }
 
   onYearToChange(year: string) {
-    const number = parseFloat(year);
+    const number = parseInt(year);
     if (number <= this.updated && number > 1999) {
       this.yearTo = number
       if (this.currSelect[0] && this.currSelect[1]) {
@@ -131,7 +133,7 @@ export class CurrencyComponent implements OnInit {
   }
 
   onYearFromChange(year: string) {
-    const number = parseFloat(year);
+    const number = parseInt(year);
     if (number > 1999 && number < this.updated) {
       this.yearFrom = number
       if (this.currSelect[0] && this.currSelect[1]) {
@@ -142,3 +144,5 @@ export class CurrencyComponent implements OnInit {
   }
 
 }
+
+

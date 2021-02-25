@@ -34,7 +34,7 @@ export type ChartOptions = {
 export class ChartsComponent implements OnInit {
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
-  state: State;  
+  state: State;
   constructor(public currService: CurrencyService, public store: Store<State>) {
     this.chartOptions = {
       series: [
@@ -130,7 +130,7 @@ export class ChartsComponent implements OnInit {
         },
         xaxis: {
           categories: this.state.history.date.map(key => {
-            return key.substr(0,4)
+            return key.substr(0, 4)
           })
         }
       };

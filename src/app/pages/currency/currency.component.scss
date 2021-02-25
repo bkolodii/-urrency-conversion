@@ -4,9 +4,10 @@
   width: 100%;
   margin: 10px auto;
   @include flexbox(row, nowrap, space-around, center);
-  &__currency{
+
+  &__currency {
     width: 40%;
-  @include flexbox(row, nowrap, space-around, center);
+    @include flexbox(row, nowrap, space-around, center);
 
   }
 
@@ -29,28 +30,31 @@ h2 {
 
   .date-from {
     width: 40%;
-    @include flexbox( column, nowrap, center, center);
+    @include flexbox(column, nowrap, center, center);
 
   }
+
   .date-to {
     width: 40%;
-    @include flexbox( column, nowrap, center, center);
+    @include flexbox(column, nowrap, center, center);
 
   }
 }
 
-@media screen and (max-width:978px){
+@media screen and (max-width:978px) {
   .container {
-    &__currency{
+    &__currency {
       width: 40%;
-    @include flexbox(column, nowrap, space-around, center);
+      @include flexbox(column, nowrap, space-around, center);
     }
   }
 }
-@media screen and (max-width:578px){
+
+@media screen and (max-width:578px) {
   .container {
     @include flexbox(column, nowrap, space-around, center);
   }
+
   .filter {
     @include flexbox(column, nowrap, space-around, center);
   }
