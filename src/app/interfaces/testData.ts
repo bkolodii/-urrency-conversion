@@ -20,7 +20,7 @@ export const testHistory = [
         {code: "PHP", value: 56.9, data: "2019-12-31"},
         {code: "PHP", data: "2020-12-31", value: 59.125}
     ]
-]
+];
        
     
 

@@ -29,28 +29,28 @@ export class CurrencyComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCurrency()
+    this.getCurrency();
   }
   getCurrency() {
     this.currService.getCurrency().subscribe(data => {
       this.currencies = Object.keys(data.rates).map(key => {
-        return { code: key, value: data.rates[key] }
-      })
+        return { code: key, value: data.rates[key] };
+      });
       this.updated = +data.date.substr(0, 4);
-    })
+    });
   }
 
-  currencyFrom(curr: CurrencyItems) {
-    this.currSelect = JSON.parse(JSON.stringify(this.currSelect))
-    this.currSelect[0] = curr;
-    this.historyAll = JSON.parse(JSON.stringify(this.historyAll))
-    this.historyAll[0] = JSON.parse(JSON.stringify(this.historyAll[0]))
-    this.historyAll[0] = []
+  currencyFrom(currItem: CurrencyItems) {
+    this.currSelect = JSON.parse(JSON.stringify(this.currSelect));
+    this.currSelect[0] = currItem;
+    this.historyAll = JSON.parse(JSON.stringify(this.historyAll));
+    this.historyAll[0] = JSON.parse(JSON.stringify(this.historyAll[0]));
+    this.historyAll[0] = [];
     for (let i = (this.yearFrom ? this.yearFrom : 2015); i < (this.yearTo ? this.yearTo + 1 : this.updated + 1); i++) {
       this.currService.getCurrHisrory(i).subscribe(data => {
         Object.keys(data.rates).map(
           key => {
-            if (key == curr.code) {
+            if (key == currItem.code) {
               this.historyAll = JSON.parse(JSON.stringify(this.historyAll))
               this.historyAll[0].push({
                 code: key,
@@ -58,7 +58,7 @@ export class CurrencyComponent implements OnInit {
                 data: data.date
               })
             }
-          })
+          });
         if (i == (this.yearTo ? this.yearTo : this.updated)) {
           this.currService.history.next(this.historyAll);
           this.exchange();
@@ -68,17 +68,17 @@ export class CurrencyComponent implements OnInit {
     }
   }
 
-  currencyTo(curr: CurrencyItems) {
-    this.currSelect = JSON.parse(JSON.stringify(this.currSelect))
-    this.currSelect[1] = curr
-    this.historyAll = JSON.parse(JSON.stringify(this.historyAll))
-    this.historyAll[1] = JSON.parse(JSON.stringify(this.historyAll[1]))
-    this.historyAll[1] = []
+  currencyTo(currItem: CurrencyItems) {
+    this.currSelect = JSON.parse(JSON.stringify(this.currSelect));
+    this.currSelect[1] = currItem;
+    this.historyAll = JSON.parse(JSON.stringify(this.historyAll));
+    this.historyAll[1] = JSON.parse(JSON.stringify(this.historyAll[1]));
+    this.historyAll[1] = [];
     for (let i = this.yearFrom ? this.yearFrom : 2015; i < (this.yearTo ? this.yearTo + 1 : this.updated + 1); i++) {
       this.currService.getCurrHisrory(i).subscribe(data => {
         Object.keys(data.rates).map(
           key => {
-            if (key == curr.code) {
+            if (key == currItem.code) {
               this.historyAll = JSON.parse(JSON.stringify(this.historyAll))
               this.historyAll[1].push({
                 code: key,
@@ -86,7 +86,7 @@ export class CurrencyComponent implements OnInit {
                 data: data.date
               })
             }
-          })
+          });
         if (i == (this.yearTo ? this.yearTo : this.updated)) {
           this.currService.history.next(this.historyAll);
           this.exchange();
@@ -96,14 +96,14 @@ export class CurrencyComponent implements OnInit {
   }
 
   ChangeCurr() {
-    this.currSelect = JSON.parse(JSON.stringify(this.currSelect))
-    this.historyAll = JSON.parse(JSON.stringify(this.historyAll))
-    this.currSelect = this.currSelect.reverse()
-    if (this.currSelect[0]) this.selectedCurrencyFrom = this.currSelect[0].code
-    if (this.currSelect[1]) this.selectedCurrencyTo = this.currSelect[1].code
-    this.historyAll = this.historyAll.reverse()
+    this.currSelect = JSON.parse(JSON.stringify(this.currSelect));
+    this.historyAll = JSON.parse(JSON.stringify(this.historyAll));
+    this.currSelect = this.currSelect.reverse();
+    if (this.currSelect[0]) this.selectedCurrencyFrom = this.currSelect[0].code;
+    if (this.currSelect[1]) this.selectedCurrencyTo = this.currSelect[1].code;
+    this.historyAll = this.historyAll.reverse();
     this.currService.history.next(this.historyAll);
-    this.exchange()
+    this.exchange();
   }
 
   exchange() {
@@ -124,10 +124,10 @@ export class CurrencyComponent implements OnInit {
   onYearToChange(year: string) {
     const number = parseInt(year);
     if (number <= this.updated && number > 1999) {
-      this.yearTo = number
+      this.yearTo = number;
       if (this.currSelect[0] && this.currSelect[1]) {
-        this.currencyFrom(this.currSelect[0])
-        this.currencyTo(this.currSelect[1])
+        this.currencyFrom(this.currSelect[0]);
+        this.currencyTo(this.currSelect[1]);
       }
     }
   }
@@ -135,10 +135,10 @@ export class CurrencyComponent implements OnInit {
   onYearFromChange(year: string) {
     const number = parseInt(year);
     if (number > 1999 && number < this.updated) {
-      this.yearFrom = number
+      this.yearFrom = number;
       if (this.currSelect[0] && this.currSelect[1]) {
-        this.currencyFrom(this.currSelect[0])
-        this.currencyTo(this.currSelect[1])
+        this.currencyFrom(this.currSelect[0]);
+        this.currencyTo(this.currSelect[1]);
       }
     }
   }

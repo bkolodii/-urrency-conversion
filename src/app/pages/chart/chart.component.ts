@@ -88,14 +88,14 @@ export class ChartsComponent implements OnInit {
   ngOnInit(): void {
     this.currService.history.subscribe(data => {
       if (data[0].length > 0 && data[1].length > 0) {
-        this.store.dispatch(new HistoryCurrChangeAction(data))
-        this.buildChart()
+        this.store.dispatch(new HistoryCurrChangeAction(data));
+        this.buildChart();
       }
     })
   }
   buildChart(): void {
     this.store.subscribe(data => {
-      this.state = JSON.parse(JSON.stringify(data))
+      this.state = JSON.parse(JSON.stringify(data));
       this.chartOptions = {
         series: [
           {
@@ -131,7 +131,7 @@ export class ChartsComponent implements OnInit {
         xaxis: {
           categories: this.state.history.date.map(key => {
             return key.substr(0, 4)
-          })
+          }).sort()
         }
       };
     })

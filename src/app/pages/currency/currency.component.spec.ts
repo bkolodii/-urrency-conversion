@@ -16,7 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { AmountCurrChangeAction } from 'src/app/redux/actions/amountCurr';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { of } from 'rxjs/internal/observable/of';
-import { DataStub } from 'src/app/clasess/testData';
+import { DataStub } from 'src/app/classes/testData';
 import { testData, testHistory } from 'src/app/interfaces/testData';
 import { HistoryCurrChangeAction } from 'src/app/redux/actions/historyCurr';
 describe('CurrencyComponent', () => {
@@ -59,15 +59,15 @@ describe('CurrencyComponent', () => {
     service = fixture.debugElement.injector.get(CurrencyService);
     httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get(HttpTestingController);
-    component.getCurrency()
+    component.getCurrency();
     fixture.detectChanges();
   });
 
   it(`should have value from`, ((done) => {
-    component.currencyFrom({ code: "RUB", value: 123 })
+    component.currencyFrom({ code: "RUB", value: 123 });
     expect(component.currSelect[0].value == 123).toBeTrue()
-    done()
-    service.history.next(testHistory)
+    done();
+    service.history.next(testHistory);
     fixture.detectChanges();
   }))
   it(`should have value to`, ((done) => {

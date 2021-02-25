@@ -3,7 +3,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Enter amount from</mat-label>
       <input matInput #input [ngModel]="amountFrom$ | async" type="number" (ngModelChange)="onAmountChange($event)"
-        maxlength="15" min="0" max="15" pattern="[0-9]{2}" placeholder="20.00" required>
+        maxlength="15" min="0" max="1000000" placeholder="20.00" required>
       <mat-hint align="end">{{input.value?.length || 0}}/15</mat-hint>
     </mat-form-field>
 
